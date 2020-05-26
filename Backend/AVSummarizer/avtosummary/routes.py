@@ -1,9 +1,25 @@
 import os
-from flask import Flask, request, jsonify
-from utils import UploadedFile, Transcribe
+from flask import Flask, request, jsonify, Blueprint
 
-app = Flask(__name__)
+from AVSummarizer.config import Config
+#from utils import UploadedFile, Transcribe
 
+avtosummary = Blueprint('avtosummary',__name__)
+
+@avtosummary.route('/api/summarize', methods=['GET'])
+def get_summarization_of_avlink():
+    try:
+        avlink = request.json['avlink']
+        message = {
+            'avlink':avlink
+        }
+        return jsonify(message), 200
+    except:
+        message = {
+            "message": "Internal Server Error, something went wrong"
+        }
+        return jsonify(message), 500
+"""
 @app.route('/upload_file', methods=['POST'])
 def upload_file_in_s3():
     try:
@@ -63,4 +79,4 @@ def get_text():
             "message": "Internal Server Error, something went wrong"
         }
         return jsonify(message), 500
-
+"""
