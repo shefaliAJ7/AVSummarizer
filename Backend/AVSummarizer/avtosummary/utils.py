@@ -1,3 +1,25 @@
+import boto
+
+from AVSummarizer.config import Config
+from AVSummarizer.avtosummary.utils.mp3file import MP3File
+from AVSummarizer.avtosummary.utils.transcribe import Transcribe
+from AVSummarizer.avtosummary.utils.summarization import Summarization
+
+class AVSummary_Utils:
+
+    def av_to_mp3(self, avlink):
+        pass
+
+    def mp3_to_text(self, mp3_file_path):
+        pass
+        transcribe = Transcribe()
+        transcribe.save_mp3_in_s3(mp3_file_path)
+        return transcribe.transcribe_mp3()
+
+    def text_to_summary(self, text):
+        pass
+
+"""
 import os
 import boto3
 import time
@@ -90,4 +112,4 @@ class Transcribe:
 
         # delete the job
         transcribe.delete_transcription_job(TranscriptionJobName=JOB_NAME)
-
+"""

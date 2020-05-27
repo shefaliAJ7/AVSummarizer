@@ -1,8 +1,7 @@
 import os
 from flask import Flask, request, jsonify, Blueprint
 
-from AVSummarizer.config import Config
-#from utils import UploadedFile, Transcribe
+from utils import AVSummary_Utils
 
 avtosummary = Blueprint('avtosummary',__name__)
 
@@ -10,15 +9,54 @@ avtosummary = Blueprint('avtosummary',__name__)
 def get_summarization_of_avlink():
     try:
         avlink = request.json['avlink']
+        utils = AVSummary_Utils()
+
+        if utils.isAVLinkValid(avlink):
+            mp3 = utils.avlink_to_mp3(avlink)
+
+            if utils.isMP3FileValid(mp3):
+                text = utils.mp3_to_text(mp3)
+
+                if utils.isTextValid(text):
+                    summary = utils.text_to_summary(text)
+
+                        if utils.isSummaryValid(summary):
+                            message = {
+                                "text": text,
+                                "summary": summary,
+                                "message": "No error"
+                            }
+                            return jsonify(message), 200
+                    message = {
+                        "text": text,
+                        "summary": "",
+                        "message": "Summary could not be generated"
+                    }
+                    return jsonify(message), 500
+                message = {
+                    "text": "",
+                    "summary": "",
+                    "message": "Text and Summary could not be generated"
+                }
+                return jsonify(message), 500
+            message = {
+                "text": "",
+                "summary": "",
+                "message": "Mp3File could not be generated"
+            }
+            return jsonify(message), 500
         message = {
-            'avlink':avlink
+            "text": "",
+            "summary": "",
+            "message": "AVLink given is not valid or broken"
         }
-        return jsonify(message), 200
+        return jsonify(message), 400
     except:
         message = {
             "message": "Internal Server Error, something went wrong"
         }
-        return jsonify(message), 500
+        return jsonify( message), 500
+
 """
 @app.route('/upload_file', methods=['POST'])
 def upload_file_in_s3():
