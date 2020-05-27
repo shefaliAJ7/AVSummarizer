@@ -1,0 +1,576 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.under:hover {
+  border-bottom: 1px solid red;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+/* For demo */
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow-x: scroll;
+}
+
+.hist_hashtag{
+  width: 150vw !important;
+  height:60vh !important;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+  overflow-x: scroll;
+}
+
+.line-styles{
+  width: 75vw !important;
+  height:79vh !important;
+  vertical-align:true;
+  horizontal-align:true;
+  display: inline-block;
+  background-color: #fff;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.dropdown-menu a {
+  position: relative;
+}
+
+.tagCloud-word{
+  cursor: pointer;
+  font-size: 80;
+}
+
+.cardStyle
+{  width: 33vw;
+   height:80vh; /* or whatever width you want. */
+   overflow-x: hidden;
+   overflow-y: scroll;
+   justify-content: center;
+
+}
+
+.cardStyleTable
+{  width: 30vw;
+   height:80vh; /* or whatever width you want. */
+   overflow-x: hidden;
+   overflow-y: scroll;
+   justify-content: center;
+    margin-right: 8px;
+}
+.middleTable{
+  width: 25.75vw;
+}
+
+.MuiTableRow-root-30{
+  height: 68px !important;
+}
+.cardStyleCarousel
+{
+   height:45vh;
+}
+
+.toastClass
+{
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 22px;
+  font-weight: bold;
+  width: 29vw;
+}
+.cardStyleCarouselVideo
+{
+  height: 40vh;
+  margin-right : 5px
+}
+
+.cardStyleCarouselImage
+{
+  height: 55vh;
+  overflow-y: scroll;
+}
+
+.layoutStyle
+{
+   height:100%; /* or whatever width you want. */
+   /* or whatever width you want. */
+   width: 160vh;
+}
+
+.MuiTableCell-body-37 {
+  font-size: 1.5rem !important;
+}
+.MuiTableCell-head-36 {
+  font-size: 1.6rem !important;
+}
+
+
+.speech-bubble {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 10px solid transparent;
+  border-top-color: white;
+  position: relative;
+  background:   white;
+  border-radius: .4em;
+  font-size: 17px;
+
+}
+
+.speech-bubbleTagCloud {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 10px solid transparent;
+  border-top-color: white;
+  position: relative;
+  background:   white;
+
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding: 7px 20px;
+  justify-content: center;
+  margin-left: 4vw;
+  width:92vw !important;
+  background: #fff;
+}
+.headingTable{
+  font-size: 16px !important;
+  color: rgba(0, 0, 0, 0.85) !important;
+  font-weight: 500 !important;
+  padding: 4px 10px 4px 24px !important;
+  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"  !important;
+
+}
+.speech-width{
+  width: 25vw;
+  max-width: 25vw;
+  word-wrap: break-word;
+  white-space: normal
+}
+
+.cloud-color {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:92vw !important;
+  border-top-color:   #afbdd4;
+  background: #fff;
+
+  margin-top: 2px;
+  height: 60vh;
+  margin-left: 4vw;
+  text-align:center;
+  display:flex;
+}
+.heading{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 14px solid transparent;
+  border-top-color:   #fff;
+  background:   #fff;
+  border-radius: .4em;
+  width: 35vh;
+  height: 4vh;
+  font-size: 3vh;
+  text-align: center;
+  margin-left: 15vh;
+
+}
+.carousel{
+  margin-top: 50px;
+  width: 87vw !important;
+  left:108px;
+  max-height: 90vh;
+
+}
+
+/*.krqaeB {
+  overflow: visible !important;
+}
+
+.kidPoB {
+    overflow: visible !important;
+}*/
+
+html{
+  overflow-x:hidden;
+}
+.fb-post-styles
+{
+
+  justify-content: center;
+}
+
+.twitter-post-styles {
+   /* or whatever width you want. */
+  height: 80vh;
+  width: 22vw;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-bottom: 2vw;
+  justify-content: center;
+  overflow-y: scroll;
+
+}
+
+.fb-row {
+  margin-top: 50px;
+  width: 87vw !important;
+  left:108px;
+  max-height: 90vh;
+}
+
+.fb-pages-col-styles {
+  width: 87vw;
+}
+
+.fb-pages-card-styles {
+
+}
+
+.fb-profiles-col-styles {
+  backgroundColor: #fff;
+  boxShadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+  margin-left:2vw;
+  width: 20vw;
+}
+
+.fb-profiles-card-styles {
+  height: 65vh;
+  overflow-y: scroll;
+}
+
+.carouselVid{
+     margin-top: 50px;
+    width: 92.85vw !important;
+    left: 64px;
+    overflow-x: scroll;
+
+}
+
+
+body {
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-smooth: always;
+  margin: 0;
+  padding: 0;
+}
+/*.diYeXN {
+
+    position: relative;
+    overflow: scroll;
+    height: 200px;
+}*/
+h1 {
+  font-size: 3rem;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  opacity: 0.5;
+}
+
+.app-outer {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  padding: 20px 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.app-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.tag-cloud {
+  flex: 1;
+}
+
+.tag-cloud > div {
+  transition: 1.4s;
+}
+
+.tag-item-wrapper {
+  cursor: pointer;
+}
+
+.tag-item-wrapper:hover {
+  z-index: 100;
+}
+
+.tag-item-wrapper:hover .tag-item-tooltip {
+  display: block;
+}
+
+.tag-item-tooltip {
+  background: #c01916;
+  color: white;
+  margin-top: 5px;
+  z-index: 100;
+  display: none;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 1;
+  position: absolute;
+  min-width: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.topics-card {
+  width: 15vw;
+  max-height: 79vh;
+  word-wrap: break-word;
+  white-space: normal
+}
+
+
+.card-column {
+  backgroundColor: #fff;
+  boxShadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+  margin-left:2vw;
+
+}
+
+/*.tw-card-styles .ant-card-body{
+  overflow-x:scroll !important;
+  width: 100vw;
+}*/
+
+/*.fb-column {
+  width: 66vw;
+
+  overflow: scroll;
+  overflow: -moz-scrollbars-vertical;
+}*/
+
+
+
+.ddJgyP {
+
+    width: 100%;
+    overflow-x: scroll !important;
+    -webkit-overflow-scrolling: touch;
+
+}
+/*
+.dSHmrs {
+    position: relative;
+    overflow: scroll !important;
+    height: 80vh;
+
+}*/
+
+
+/*.dEKzJu {
+    overflow: scroll !important;
+}*/
+.tw-card-styles {
+
+
+}
+
+/*
+.spinner {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   height:90px;
+   width:90px;
+   margin:0px auto;
+   -webkit-animation: rotation .6s infinite linear;
+   -moz-animation: rotation .6s infinite linear;
+   -o-animation: rotation .6s infinite linear;
+   animation: rotation .6s infinite linear;
+   border-left:6px solid rgba(0,174,239,.15);
+   border-right:6px solid rgba(0,174,239,.15);
+   border-bottom:6px solid rgba(0,174,239,.15);
+   border-top:6px solid rgba(0,174,239,.8);
+   border-radius:100%;
+}
+
+@-webkit-keyframes rotation {
+   from {-webkit-transform: rotate(0deg);}
+   to {-webkit-transform: rotate(359deg);}
+}
+@-moz-keyframes rotation {
+   from {-moz-transform: rotate(0deg);}
+   to {-moz-transform: rotate(359deg);}
+}
+@-o-keyframes rotation {
+   from {-o-transform: rotate(0deg);}
+   to {-o-transform: rotate(359deg);}
+}
+@keyframes rotation {
+   from {transform: rotate(0deg);}
+   to {transform: rotate(359deg);}
+}
+*/
+
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,900);
+
+.twPc-div {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #e1e8ed;
+    border-radius: 6px;
+    height: 200px;
+    max-width: 340px;
+    width: 290px;
+
+}
+.twPc-bg {
+    /*background-image: url("http://desain360.com/img/homepage.jpg");*/
+    background-position: 0 50%;
+    background-size: 100% auto;
+    border-bottom: 1px solid #e1e8ed;
+    border-radius: 4px 4px 0 0;
+    height: 95px;
+    width: 100%;
+}
+.twPc-block {
+    display: block !important;
+}
+.twPc-button {
+    margin: -35px -10px 0;
+    text-align: right;
+    width: 100%;
+}
+.twPc-avatarLink {
+    background-color: #fff;
+    border-radius: 6px;
+    display: inline-block !important;
+    float: left;
+    margin: -30px 5px 0 8px;
+    max-width: 100%;
+    padding: 1px;
+    vertical-align: bottom;
+}
+.twPc-avatarImg {
+    border: 2px solid #fff;
+    border-radius: 7px;
+    box-sizing: border-box;
+    color: #fff;
+    height: 72px;
+    width: 72px;
+}
+.twPc-divUser {
+    margin: 5px 0 0;
+}
+.twPc-divName {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21px;
+}
+.twPc-divName a {
+    color: inherit !important;
+}
+.twPc-divStats {
+    margin-left: 11px;
+    padding: 10px 0;
+}
+.twPc-Arrange {
+    box-sizing: border-box;
+    display: table;
+    margin: 0;
+    min-width: 100%;
+    padding: 0;
+    table-layout: auto;
+}
+ul.twPc-Arrange {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.twPc-ArrangeSizeFit {
+    display: table-cell;
+    padding: 0;
+    vertical-align: top;
+}
+.twPc-ArrangeSizeFit a:hover {
+    text-decoration: none;
+}
+.twPc-StatValue {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    transition: color 0.15s ease-in-out 0s;
+}
+.twPc-StatLabel {
+    color: #8899a6;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    overflow: hidden;
+    text-transform: uppercase;
+    transition: color 0.15s ease-in-out 0s;
+}
+
+.hashtag-row {
+  margin-top: 50px;
+    left: 75px;
+    width: 92.85vw !important;
+}
+.hashtag {
+  overflow-x:scroll;
+}
+.hashtag-class {
+}
+
+.epsazs {
+  overflow-x: scroll!important;
+}
+.rowText{
+  white-space: nowrap;
+    width: 100%;                   /* IE6 needs any width */
+    overflow: hidden;              /* "overflow" value must be different from  visible"*/
+    -o-text-overflow: ellipsis;    /* Opera < 11*/
+    text-overflow:    ellipsis;
+}
+
+.MuiTableCell-root-35{
+  padding: 4px 10px 4px 24px !important;
+}
+
+.search{
+  width: 100px;
+  height: 50px;
+}
