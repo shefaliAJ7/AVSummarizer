@@ -45,7 +45,11 @@ class AVSummary_Utils:
         return transcribe.transcribe_mp3()
 
     def text_to_summary(self, text):
-        pass
+        summarization = Summarization()
+        min = 10
+        max = 100
+        summary = summarization.summarize(text, min, max)
+        return summary
 
 """
 import os
