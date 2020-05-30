@@ -1,14 +1,42 @@
 import boto
-
+import re
 from AVSummarizer.config import Config
-from AVSummarizer.avtosummary.utils.mp3file import MP3File
-from AVSummarizer.avtosummary.utils.transcribe import Transcribe
-from AVSummarizer.avtosummary.utils.summarization import Summarization
+from AVSummarizer.avtosummary.utils_pg.mp3file import Mp3File
+from AVSummarizer.avtosummary.utils_pg.transcribe import Transcribe
+from AVSummarizer.avtosummary.utils_pg.summarization import Summarization
 
 class AVSummary_Utils:
 
-    def av_to_mp3(self, avlink):
+    def isAVLinkValid(self, avlink):
+        regex = re.compile(
+            r'^(?:http|ftp)s?://'  # http:// or https://
+            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+            r'localhost|'  # localhost...
+            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+            r'(?::\d+)?'  # optional port
+            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        if re.match(regex, avlink) is not None:
+            return True
+        else:
+            return False
+    def isMp3FileValid(self, mp3file):
+        return True
+
+    def isTextValid(self, text):
         pass
+
+    def isSummaryValid(self, summary):
+        pass
+
+    def av_to_mp3(self, avlink):
+        toMp3 = Mp3File()
+        if toMp3.convertToMp3(avlink):
+            loc = avlink.split('/')
+            video_name = loc[-1]
+            return video_name
+        else:
+            return ''
+
 
     def mp3_to_text(self, mp3_file_path):
         pass
@@ -28,7 +56,7 @@ import requests
 from datetime import date
 from botocore.exceptions import NoCredentialsError
 from botocore.client import Config as ConfigAWS
-from werkzeug.utils import secure_filename
+from werkzeug.utils_pg import secure_filename
 
 aws_access_key_id = "AKIAVR2JSCFVAVI34XFX"
 aws_access_secret_key = "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"
