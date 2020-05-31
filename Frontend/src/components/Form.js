@@ -12,7 +12,7 @@ import { Left } from 'react-bootstrap/lib/Media';
 import axios from 'axios';
 
 
-const url_final = "http://18.224.61.159:8100/";
+const url_final = "https://localhost:5000/api/summarize";
 
 const loadingIcon = <Icon type="loading" style={{ fontSize: 34 }} spin />;
 
@@ -26,7 +26,7 @@ class DetailsForm extends React.Component {
       };
 
       this.handleSearchChange = this.handleSearchChange.bind(this);
-
+      this.fetchData = this.fetchData.bind(this);
   }
 
 
@@ -34,20 +34,26 @@ class DetailsForm extends React.Component {
     this.setState({data: event.target.value});
   }
 
-  fetchSystemSubmissionData(){
+  fetchData(){
     this.setState({loading:true});
 
-
-    fetch(url_final+this.state.data,{
+    var avlink = this.state.data;
+    var body = {
+	     "avlink": avlink
+    }
+    console.log(avlink);
+    fetch(url_final,{
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-			},
+			}
 		}).then((response) => {
-			if(response.status == 200)
+			if(response.status == 200){
+        console.log("API created");
 				return response.json()
+      }
 			else {
 				alert('Uh Oh! Something went wrong');
 				return -1;

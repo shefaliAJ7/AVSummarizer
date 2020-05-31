@@ -1,23 +1,56 @@
 import boto
-
+import re
+import os
 from AVSummarizer.config import Config
-from AVSummarizer.avtosummary.utils.mp3file import MP3File
-from AVSummarizer.avtosummary.utils.transcribe import Transcribe
-from AVSummarizer.avtosummary.utils.summarization import Summarization
+from AVSummarizer.avtosummary.utils_pg.audiofile import AudioFile
+from AVSummarizer.avtosummary.utils_pg.transcribe import Transcribe
+from AVSummarizer.avtosummary.utils_pg.summarization import Summarization
 
 class AVSummary_Utils:
 
-    def av_to_mp3(self, avlink):
-        pass
+    def __init__(self):
+        self.toAudio = AudioFile()
+        self.toText = Transcribe()
+        self.toSummary = Summarization()
 
-    def mp3_to_text(self, mp3_file_path):
-        pass
-        transcribe = Transcribe()
-        transcribe.save_mp3_in_s3(mp3_file_path)
-        return transcribe.transcribe_mp3()
+    def isAVLinkValid(self, avlink):
+        regex = re.compile(
+            r'^(?:http|ftp)s?://'  # http:// or https://
+            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+            r'localhost|'  # localhost...
+            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+            r'(?::\d+)?'  # optional port
+            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        if re.match(regex, avlink) is not None:
+            return True
+        return False
+
+    def isAudioFileValid(self, audio_file):
+        if os.path.exists(audio_file):
+            return True
+        return False
+
+    def isTextValid(self, text):
+        if text != "-1":
+            return True
+        return False
+
+    def isSummaryValid(self, summary):
+        if summary != "-1":
+            return True
+        return False
+
+    def av_to_audio(self, avlink):
+        complete_file_path, filename = self.toAudio.convertToAudio(avlink)
+        return self.toAudio.change_media(complete_file_path, filename)
+
+    def audio_to_text(self, audio_file_path, audio_filename):
+        self.toText.filename = audio_filename
+        s3link = self.toText.save_audio_in_s3(audio_file_path)
+        return self.toText.transcribe_audio(s3link)
 
     def text_to_summary(self, text):
-        pass
+        return self.toSummary.summary
 
 """
 import os
@@ -28,7 +61,7 @@ import requests
 from datetime import date
 from botocore.exceptions import NoCredentialsError
 from botocore.client import Config as ConfigAWS
-from werkzeug.utils import secure_filename
+from werkzeug.utils_pg import secure_filename
 
 aws_access_key_id = "AKIAVR2JSCFVAVI34XFX"
 aws_access_secret_key = "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"

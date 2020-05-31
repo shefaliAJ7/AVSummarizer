@@ -1,7 +1,8 @@
 import os
+import sys
 from flask import Flask, request, jsonify, Blueprint
 
-from utils import AVSummary_Utils
+from AVSummarizer.avtosummary.utils import AVSummary_Utils
 
 avtosummary = Blueprint('avtosummary',__name__)
 
@@ -12,21 +13,21 @@ def get_summarization_of_avlink():
         utils = AVSummary_Utils()
 
         if utils.isAVLinkValid(avlink):
-            mp3 = utils.avlink_to_mp3(avlink)
+            audio_file_path, audio_filename = utils.av_to_audio(avlink)
 
-            if utils.isMP3FileValid(mp3):
-                text = utils.mp3_to_text(mp3)
+            if utils.isAudioFileValid(audio_file_path):
+                text = utils.audio_to_text(audio_file_path, audio_filename)
 
                 if utils.isTextValid(text):
                     summary = utils.text_to_summary(text)
 
-                        if utils.isSummaryValid(summary):
-                            message = {
-                                "text": text,
-                                "summary": summary,
-                                "message": "No error"
-                            }
-                            return jsonify(message), 200
+                    if utils.isSummaryValid(summary):
+                        message = {
+                            "text": text,
+                            "summary": summary,
+                            "message": "No error"
+                        }
+                        return jsonify(message), 200
                     message = {
                         "text": text,
                         "summary": "",
@@ -39,23 +40,24 @@ def get_summarization_of_avlink():
                     "message": "Text and Summary could not be generated"
                 }
                 return jsonify(message), 500
-            message = {
-                "text": "",
-                "summary": "",
-                "message": "Mp3File could not be generated"
-            }
-            return jsonify(message), 500
+            else:
+                message = {
+                    "text": "",
+                    "summary": "",
+                    "message": "AudioFile could not be generated"
+                }
+                return jsonify(message), 500
         message = {
             "text": "",
             "summary": "",
-            "message": "AVLink given is not valid or broken"
+            "message": "Link Broken"
         }
         return jsonify(message), 400
     except:
         message = {
             "message": "Internal Server Error, something went wrong"
         }
-        return jsonify( message), 500
+        return jsonify(message), 500
 
 """
 @app.route('/upload_file', methods=['POST'])
