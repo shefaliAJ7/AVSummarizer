@@ -44,11 +44,18 @@ class AVSummary_Utils:
         transcribe.save_mp3_in_s3(mp3_file_path)
         return transcribe.transcribe_mp3()
 
+    def improve(self, summary):
+        indi_parts = summary.split('.')
+        indi_parts.pop()
+        summary = '.'.join(indi_parts)
+        return summary
+
     def text_to_summary(self, text):
         summarization = Summarization()
         min = 10
         max = 100
         summary = summarization.summarize(text, min, max)
+        summary = self.improve(summary)
         return summary
 
 """
