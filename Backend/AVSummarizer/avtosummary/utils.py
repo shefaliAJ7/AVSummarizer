@@ -23,6 +23,7 @@ class AVSummary_Utils:
             r'(?:/?|[/?]\S+)$', re.IGNORECASE)
         if re.match(regex, avlink) is not None:
             return True
+
         return False
 
     def isAudioFileValid(self, audio_file):
@@ -50,7 +51,8 @@ class AVSummary_Utils:
         return self.toText.transcribe_audio(s3link)
 
     def text_to_summary(self, text):
-        return self.toSummary.summary
+        summary = self.toSummary.summarize(text, 1, 10)
+        return self.toSummary.improve(summary)
 
 """
 import os

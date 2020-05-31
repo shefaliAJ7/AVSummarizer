@@ -11,7 +11,7 @@ def get_summarization_of_avlink():
     try:
         avlink = request.json['avlink']
         utils = AVSummary_Utils()
-
+        print(avlink)
         if utils.isAVLinkValid(avlink):
             audio_file_path, audio_filename = utils.av_to_audio(avlink)
 
