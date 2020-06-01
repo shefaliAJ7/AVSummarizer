@@ -1,11 +1,17 @@
 import boto
 import re
+import os
 from AVSummarizer.config import Config
-from AVSummarizer.avtosummary.utils_pg.mp3file import Mp3File
+from AVSummarizer.avtosummary.utils_pg.audiofile import AudioFile
 from AVSummarizer.avtosummary.utils_pg.transcribe import Transcribe
 from AVSummarizer.avtosummary.utils_pg.summarization import Summarization
 
 class AVSummary_Utils:
+
+    def __init__(self):
+        self.toAudio = AudioFile()
+        self.toText = Transcribe()
+        self.toSummary = Summarization()
 
     def isAVLinkValid(self, avlink):
         regex = re.compile(
@@ -17,46 +23,36 @@ class AVSummary_Utils:
             r'(?:/?|[/?]\S+)$', re.IGNORECASE)
         if re.match(regex, avlink) is not None:
             return True
-        else:
-            return False
-    def isMp3FileValid(self, mp3file):
-        return True
+
+        return False
+
+    def isAudioFileValid(self, audio_file):
+        if os.path.exists(audio_file):
+            return True
+        return False
 
     def isTextValid(self, text):
-        pass
+        if text != "-1":
+            return True
+        return False
 
     def isSummaryValid(self, summary):
-        pass
+        if summary != "-1":
+            return True
+        return False
 
-    def av_to_mp3(self, avlink):
-        toMp3 = Mp3File()
-        if toMp3.convertToMp3(avlink):
-            loc = avlink.split('/')
-            video_name = loc[-1]
-            return video_name
-        else:
-            return ''
+    def av_to_audio(self, avlink):
+        complete_file_path, filename = self.toAudio.convertToAudio(avlink)
+        return self.toAudio.change_media(complete_file_path, filename)
 
-
-    def mp3_to_text(self, mp3_file_path):
-        pass
-        transcribe = Transcribe()
-        transcribe.save_mp3_in_s3(mp3_file_path)
-        return transcribe.transcribe_mp3()
-
-    def improve(self, summary):
-        indi_parts = summary.split('.')
-        indi_parts.pop()
-        summary = '.'.join(indi_parts)
-        return summary
+    def audio_to_text(self, audio_file_path, audio_filename):
+        self.toText.filename = audio_filename
+        s3link = self.toText.save_audio_in_s3(audio_file_path)
+        return self.toText.transcribe_audio(s3link)
 
     def text_to_summary(self, text):
-        summarization = Summarization()
-        min = 10
-        max = 100
-        summary = summarization.summarize(text, min, max)
-        summary = self.improve(summary)
-        return summary
+        summary = self.toSummary.summarize(text, 1, 10)
+        return self.toSummary.improve(summary)
 
 """
 import os

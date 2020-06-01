@@ -10,32 +10,45 @@ from werkzeug.utils import secure_filename
 
 from AVSummarizer.config import Config
 
+aws_access_key_id = Config.ACCESS_KEY_ID
+aws_access_secret_key = Config.ACCESS_SECRET_KEY
+aws_bucket_name = Config.BUCKET_NAME
+
 class Transcribe:
 
-    filename = ""
-    s3link = ""
-    converted_text = ""
-    text_stats = []
+    def __init__(self):
+        self.filename = ""
+        self.s3link = ""
+        self.converted_text = "-1"
+        self.text_stats = []
 
-    def store_file_in_s3(self, complete_file_path):
+    def save_audio_in_s3(self, complete_file_path):
+        print(os.path.exists(complete_file_path))
+        data = open( complete_file_path, 'rb' )
         folder_name = date.today()
+
         s3 = boto3.resource(
             's3',
-            aws_access_key_id=Config.ACCESS_KEY_ID,
-            aws_secret_access_key=Config.ACCESS_SECRET_KEY,
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_access_secret_key,
             config=ConfigAWS( signature_version='s3v4' )
         )
         try:
-            s3.Bucket( Config.BUCKET_NAME ).upload_file( complete_file_path, '%s/%s' % (folder_name, self.filename) )
-            s3Link = "s3://" + Config.BUCKET_NAME + "/" + str( folder_name ) + "/" + self.filename
-            self.s3link = s3Link
+            s3.Bucket( aws_bucket_name ).upload_file( complete_file_path, '%s/%s' % (folder_name, self.filename) )
+            s3Link = "s3://" + aws_bucket_name + "/" + str( folder_name ) + "/" + self.filename
+            return s3Link
         except FileNotFoundError:
             print( "Error: The file was not found" )
+            return ""
         except NoCredentialsError:
             print( "Error: Credentials not available" )
+            return ""
 
+    def transcribe_audio(self, s3link):
+        self.s3link = s3link
 
-    def aws_voice_to_text(self):
+        print(self.s3link)
+
         transcribe = boto3.client(
             'transcribe',
             region_name="us-west-2",
@@ -52,7 +65,7 @@ class Transcribe:
         transcribe.start_transcription_job(
             TranscriptionJobName=JOB_NAME,
             Media={'MediaFileUri': self.s3link},
-            MediaFormat='mp3',
+            MediaFormat='wav',
             LanguageCode='en-US'
         )
         while True:
@@ -72,4 +85,6 @@ class Transcribe:
         self.converted_text = data['results']['transcripts'][0]['transcript']
 
         # delete the job
-        transcribe.delete_transcription_job(TranscriptionJobName=JOB_NAME)
+        #transcribe.delete_transcription_job(TranscriptionJobName=JOB_NAME)
+
+        return self.converted_text

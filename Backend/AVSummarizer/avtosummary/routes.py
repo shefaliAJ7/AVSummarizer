@@ -13,10 +13,10 @@ def get_summarization_of_avlink():
         utils = AVSummary_Utils()
         print(avlink)
         if utils.isAVLinkValid(avlink):
-            mp3 = utils.av_to_mp3(avlink)
-            print('mp3', mp3)
-            if utils.isMp3FileValid(mp3):
-                text = utils.mp3_to_text(mp3)
+            audio_file_path, audio_filename = utils.av_to_audio(avlink)
+
+            if utils.isAudioFileValid(audio_file_path):
+                text = utils.audio_to_text(audio_file_path, audio_filename)
 
                 if utils.isTextValid(text):
                     summary = utils.text_to_summary(text)
@@ -44,7 +44,7 @@ def get_summarization_of_avlink():
                 message = {
                     "text": "",
                     "summary": "",
-                    "message": "Mp3File could not be generated"
+                    "message": "AudioFile could not be generated"
                 }
                 return jsonify(message), 500
         message = {
