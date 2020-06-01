@@ -13,12 +13,9 @@ def get_summarization_of_avlink():
         utils = AVSummary_Utils()
         print(avlink)
         if utils.isAVLinkValid(avlink):
-            audio_file_path, audio_filename = utils.av_to_audio(avlink)
+            text = utils.av_to_text(avlink)
 
-            if utils.isAudioFileValid(audio_file_path):
-                text = utils.audio_to_text(audio_file_path, audio_filename)
-
-                if utils.isTextValid(text):
+            if utils.isTextValid(text):
                     summary = utils.text_to_summary(text)
                     print('summary', summary)
                     if utils.isSummaryValid(summary):
@@ -34,25 +31,20 @@ def get_summarization_of_avlink():
                         "message": "Summary could not be generated"
                     }
                     return jsonify(message), 500
+            else:
                 message = {
                     "text": "",
                     "summary": "",
                     "message": "Text and Summary could not be generated"
                 }
                 return jsonify(message), 500
-            else:
-                message = {
-                    "text": "",
-                    "summary": "",
-                    "message": "AudioFile could not be generated"
-                }
-                return jsonify(message), 500
-        message = {
-            "text": "",
-            "summary": "",
-            "message": "Link Broken"
-        }
-        return jsonify(message), 400
+        else:
+            message = {
+                "text": "",
+                "summary": "",
+                "message": "AudioFile could not be generated"
+            }
+            return jsonify(message), 500
     except:
         message = {
             "message": "Internal Server Error, something went wrong"

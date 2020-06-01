@@ -57,11 +57,11 @@ class DetailsForm extends React.Component {
 		}).then((response) => {
       this.setState({loading:false});
 			if(response.status == 200){
-        console.log("API created", response);
+        console.log("done", response);
 				return response.json()
       }
 			else {
-				alert('Uh Oh! Something went wrong');
+				alert('Uh Oh! ' + response.message);
 				return -1;
 			}
     }).then((data) => {

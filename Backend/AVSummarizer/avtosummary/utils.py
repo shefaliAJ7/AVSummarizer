@@ -1,16 +1,14 @@
 import boto
 import re
 import os
-from AVSummarizer.config import Config
-from AVSummarizer.avtosummary.utils_pg.audiofile import AudioFile
-from AVSummarizer.avtosummary.utils_pg.transcribe import Transcribe
+from AVSummarizer.avtosummary.utils_pg.transcript import Transcript
 from AVSummarizer.avtosummary.utils_pg.summarization import Summarization
 
 class AVSummary_Utils:
 
     def __init__(self):
-        self.toAudio = AudioFile()
-        self.toText = Transcribe()
+
+        self.toText = Transcript()
         self.toSummary = Summarization()
 
     def isAVLinkValid(self, avlink):
@@ -26,10 +24,7 @@ class AVSummary_Utils:
 
         return False
 
-    def isAudioFileValid(self, audio_file):
-        if os.path.exists(audio_file):
-            return True
-        return False
+
 
     def isTextValid(self, text):
         if text != "-1":
@@ -41,14 +36,11 @@ class AVSummary_Utils:
             return True
         return False
 
-    def av_to_audio(self, avlink):
-        complete_file_path, filename = self.toAudio.convertToAudio(avlink)
-        return self.toAudio.change_media(complete_file_path, filename)
+    def av_to_text(self, avlink):
+        text = self.toText.getTranscript(avlink)
+        return text
 
-    def audio_to_text(self, audio_file_path, audio_filename):
-        self.toText.filename = audio_filename
-        s3link = self.toText.save_audio_in_s3(audio_file_path)
-        return self.toText.transcribe_audio(s3link)
+
 
     def text_to_summary(self, text):
         summary = self.toSummary.summarize(text, 5, 100)
