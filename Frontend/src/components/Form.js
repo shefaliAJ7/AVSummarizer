@@ -12,7 +12,7 @@ import { Left } from 'react-bootstrap/lib/Media';
 import axios from 'axios';
 
 
-const url_final = "https://localhost:5000/api/summarize";
+const url_final = "http://127.0.0.1:5000/api/summarize";
 
 const loadingIcon = <Icon type="loading" style={{ fontSize: 34 }} spin />;
 
@@ -31,24 +31,28 @@ class DetailsForm extends React.Component {
 
 
   handleSearchChange(event){
+
     this.setState({data: event.target.value});
   }
 
-  fetchData(){
+  async fetchData(){
     this.setState({loading:true});
 
     var avlink = this.state.data;
-    var body = {
+    var d = {
 	     "avlink": avlink
-    }
-    console.log(avlink);
-    fetch(url_final,{
+    };
+
+    const response = await fetch(url_final,{
+      method: 'POST',
+      mode: 'cors',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-			}
+			},
+      body: JSON.stringify(d)
 		}).then((response) => {
 			if(response.status == 200){
         console.log("API created");
@@ -77,7 +81,7 @@ class DetailsForm extends React.Component {
       <Row  style={{backgroundImage:"url(" + back + ")", padding:'15%', backgroundPosition: 'center',backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
         <Form >
 
-          <Row ><Input style={{'width':'480px', 'height':'50px'}} placeholder='Enter Youtube Url...' onClick={this.handleSearchChange} /></Row>
+          <Row ><Input style={{'width':'480px', 'height':'50px'}} value={this.state.data} placeholder='Enter Youtube Url...' onChange={this.handleSearchChange.bind(this)} /></Row>
           <Row style={{'marginTop':'20px'}}><Button style={{'fontSize': '16px'}} type='submit' onClick = {this.fetchData}>Search</Button></Row>
         </Form>
         <Row style={{'marginTop':'100px'}}>
@@ -91,7 +95,9 @@ class DetailsForm extends React.Component {
             ) : (<div/>)
             }
           </Row>
-          <Row><Tabs data={this.state.allData}/></Row>
+          { this.state.sysData === '' ? (<div/>) :
+            (<Row><Tabs data={this.state.sysData}/></Row>)
+          }
           </Row>
           <Row style={{marginTop:'22%'}}>Photo by <a href='https://unsplash.com/@samscrim' target='_blank'>Samuel Scrimshaw</a> on <a href='https://unsplash.com' target='_blank'>Unsplash</a></Row>
       </Row>
