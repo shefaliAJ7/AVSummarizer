@@ -20,7 +20,7 @@ def get_summarization_of_avlink():
 
                 if utils.isTextValid(text):
                     summary = utils.text_to_summary(text)
-
+                    print('summary', summary)
                     if utils.isSummaryValid(summary):
                         message = {
                             "text": text,

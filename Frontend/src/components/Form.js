@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, Checkbox, Form, Header, Icon , Input} from 'semantic-ui-react'
+import { Button, Checkbox, Form, Header, Icon , Input, Loader, Dimmer} from 'semantic-ui-react'
 import Tabs from '../components/Tabs.js';
 import back from './../assets/img/back.png';
 
@@ -14,7 +14,7 @@ import axios from 'axios';
 
 const url_final = "http://127.0.0.1:5000/api/summarize";
 
-const loadingIcon = <Icon type="loading" style={{ fontSize: 34 }} spin />;
+const loadingIcon = <Loader />;
 
 class DetailsForm extends React.Component {
 
@@ -22,7 +22,8 @@ class DetailsForm extends React.Component {
       super(props);
       this.state = {
         data:'',
-        sysData:''
+        sysData:'',
+        loading:false,
       };
 
       this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -35,7 +36,7 @@ class DetailsForm extends React.Component {
     this.setState({data: event.target.value});
   }
 
-  async fetchData(){
+  fetchData(){
     this.setState({loading:true});
 
     var avlink = this.state.data;
@@ -43,7 +44,7 @@ class DetailsForm extends React.Component {
 	     "avlink": avlink
     };
 
-    const response = await fetch(url_final,{
+    fetch(url_final,{
       method: 'POST',
       mode: 'cors',
 			headers: {
@@ -54,8 +55,9 @@ class DetailsForm extends React.Component {
 			},
       body: JSON.stringify(d)
 		}).then((response) => {
+      this.setState({loading:false});
 			if(response.status == 200){
-        console.log("API created");
+        console.log("API created", response);
 				return response.json()
       }
 			else {
@@ -67,36 +69,34 @@ class DetailsForm extends React.Component {
 				return;
         console.log("Incoming data", data);
 			this.setState({
-				sysData:data,
-        loading: false
+				sysData:data
 			});
 		}
 		)
+
   }
 
 
   render(){
-
+    console.log('loading', this.state.loading);
+    var loading = this.state.loading;
     return(
       <Row  style={{backgroundImage:"url(" + back + ")", padding:'15%', backgroundPosition: 'center',backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
         <Form >
 
           <Row ><Input style={{'width':'480px', 'height':'50px'}} value={this.state.data} placeholder='Enter Youtube Url...' onChange={this.handleSearchChange.bind(this)} /></Row>
           <Row style={{'marginTop':'20px'}}><Button style={{'fontSize': '16px'}} type='submit' onClick = {this.fetchData}>Search</Button></Row>
+          { loading === true ? (
+
+           <Loader active inline='centered'size='massive'>Loading</Loader>
+         ) : (<div />) }
         </Form>
         <Row style={{'marginTop':'100px'}}>
           <Row>
             <Header size='huge'>Results</Header>
-
-            { this.state.loading === true ? (
-              <div style={{ textAlign: 'center', }}>
-                { loadingIcon }
-              </div>
-            ) : (<div/>)
-            }
           </Row>
           { this.state.sysData === '' ? (<div/>) :
-            (<Row><Tabs data={this.state.sysData}/></Row>)
+          (<Row><Tabs data={this.state.sysData}/></Row>)
           }
           </Row>
           <Row style={{marginTop:'22%'}}>Photo by <a href='https://unsplash.com/@samscrim' target='_blank'>Samuel Scrimshaw</a> on <a href='https://unsplash.com' target='_blank'>Unsplash</a></Row>

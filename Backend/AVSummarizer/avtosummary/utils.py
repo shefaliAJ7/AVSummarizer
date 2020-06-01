@@ -51,7 +51,7 @@ class AVSummary_Utils:
         return self.toText.transcribe_audio(s3link)
 
     def text_to_summary(self, text):
-        summary = self.toSummary.summarize(text, 1, 10)
+        summary = self.toSummary.summarize(text, 5, 100)
         return self.toSummary.improve(summary)
 
 """
