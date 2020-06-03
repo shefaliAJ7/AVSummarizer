@@ -42,8 +42,8 @@ class AVSummary_Utils:
 
 
 
-    def text_to_summary(self, text):
-        summary = self.toSummary.summarize(text, 5, 100)
+    def text_to_summary(self, text, max, min):
+        summary = self.toSummary.summarize(text, min, max)
         return self.toSummary.improve(summary)
 
 """

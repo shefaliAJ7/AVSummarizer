@@ -8,48 +8,46 @@ avtosummary = Blueprint('avtosummary',__name__)
 
 @avtosummary.route('/api/summarize', methods=['POST'])
 def get_summarization_of_avlink():
-    try:
-        avlink = request.json['avlink']
-        utils = AVSummary_Utils()
-        print(avlink)
-        if utils.isAVLinkValid(avlink):
-            text = utils.av_to_text(avlink)
 
-            if utils.isTextValid(text):
-                    summary = utils.text_to_summary(text)
-                    print('summary', summary)
-                    if utils.isSummaryValid(summary):
-                        message = {
-                            "text": text,
-                            "summary": summary,
-                            "message": "No error"
-                        }
-                        return jsonify(message), 200
+    avlink = request.json['avlink']
+    max = request.json['max']
+    min = request.json['min']
+    utils = AVSummary_Utils()
+    print(avlink)
+    if utils.isAVLinkValid(avlink):
+        text = utils.av_to_text(avlink)
+
+        if utils.isTextValid(text):
+                summary = utils.text_to_summary(text, max, min)
+                print('summary', summary)
+                if utils.isSummaryValid(summary):
                     message = {
                         "text": text,
-                        "summary": "",
-                        "message": "Summary could not be generated"
+                        "summary": summary,
+                        "message": "No error"
                     }
-                    return jsonify(message), 500
-            else:
+                    return jsonify(message), 200
                 message = {
-                    "text": "",
+                    "text": text,
                     "summary": "",
-                    "message": "Text and Summary could not be generated"
+                    "message": "Summary could not be generated"
                 }
                 return jsonify(message), 500
         else:
             message = {
                 "text": "",
                 "summary": "",
-                "message": "AudioFile could not be generated"
+                "message": "Text and Summary could not be generated"
             }
             return jsonify(message), 500
-    except:
+    else:
         message = {
-            "message": "Internal Server Error, something went wrong"
+            "text": "",
+            "summary": "",
+            "message": "Link is invalid"
         }
         return jsonify(message), 500
+
 
 """
 @app.route('/upload_file', methods=['POST'])

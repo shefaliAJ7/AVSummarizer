@@ -24,9 +24,13 @@ class DetailsForm extends React.Component {
         data:'',
         sysData:'',
         loading:false,
+        min:'30',
+        max:'100'
       };
 
       this.handleSearchChange = this.handleSearchChange.bind(this);
+      this.handleMinChange = this.handleMinChange.bind(this);
+      this.handleMaxChange = this.handleMaxChange.bind(this);
       this.fetchData = this.fetchData.bind(this);
   }
 
@@ -35,13 +39,23 @@ class DetailsForm extends React.Component {
 
     this.setState({data: event.target.value});
   }
+  handleMinChange(event){
+
+    this.setState({min: event.target.value});
+  }
+  handleMaxChange(event){
+
+    this.setState({max: event.target.value});
+  }
 
   fetchData(){
     this.setState({loading:true});
 
-    var avlink = this.state.data;
+
     var d = {
-	     "avlink": avlink
+	     "avlink": this.state.data,
+       "min": this.state.min,
+       "max":this.state.max,
     };
 
     fetch(url_final,{
@@ -61,7 +75,7 @@ class DetailsForm extends React.Component {
 				return response.json()
       }
 			else {
-				alert('Uh Oh! ' + response.message);
+				alert('Uh Oh! something went wrong!');
 				return -1;
 			}
     }).then((data) => {
@@ -78,14 +92,15 @@ class DetailsForm extends React.Component {
 
 
   render(){
-    console.log('loading', this.state.loading);
     var loading = this.state.loading;
     return(
       <Row  style={{backgroundImage:"url(" + back + ")", padding:'15%', backgroundPosition: 'center',backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
         <Form >
 
-          <Row ><Input style={{'width':'480px', 'height':'50px'}} value={this.state.data} placeholder='Enter Youtube Url...' onChange={this.handleSearchChange.bind(this)} /></Row>
-          <Row style={{'marginTop':'20px'}}><Button style={{'fontSize': '16px'}} type='submit' onClick = {this.fetchData}>Search</Button></Row>
+          <Row style={{'fontSize':'20px'}}><Input style={{'width':'480px', 'height':'50px'}} value={this.state.data} placeholder='Enter Youtube Url...' onChange={this.handleSearchChange.bind(this)} /></Row>
+          <Row style={{'marginTop':'40px', 'fontSize':'20px'}}>Min Words: <Input style={{'width':'100px', 'height':'50px', 'marginRight':'10px'}} value={this.state.min} placeholder='30' onChange={this.handleMinChange.bind(this)} />
+          Max Words : <Input style={{'width':'100px', 'height':'50px'}} value={this.state.max} placeholder='100' onChange={this.handleMaxChange.bind(this)} /></Row>
+          <Row style={{'marginTop':'25px'}}><Button style={{'fontSize': '22px'}} type='submit' onClick = {this.fetchData}>Search</Button></Row>
           { loading === true ? (
 
            <Loader active inline='centered'size='massive'>Loading</Loader>
