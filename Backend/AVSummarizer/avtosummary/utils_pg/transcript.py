@@ -10,16 +10,19 @@ class Transcript:
         self.text_stats = []
 
     def getTranscript(self, link):
+        try:
+            url_data = urlparse(link)
+            query = parse_qs(url_data.query)
+            video = query["v"][0]
+            transcript_list = YouTubeTranscriptApi.list_transcripts(video)
+            transcript = transcript_list.find_transcript(['en'])
+            ts = transcript.fetch()
+            text = ""
+            for t in ts:
+                text += t['text']
 
-        url_data = urlparse(link)
-        query = parse_qs(url_data.query)
-        video = query["v"][0]
-        transcript_list = YouTubeTranscriptApi.list_transcripts(video)
-        transcript = transcript_list.find_transcript(['en'])
-        ts = transcript.fetch()
-        text = ""
-        for t in ts:
-            text += t['text']
+            return text
+        except:
+            return "-1"
 
-        return text
 

@@ -75,7 +75,7 @@ class DetailsForm extends React.Component {
 				return response.json()
       }
 			else {
-				alert('Uh Oh! something went wrong!');
+				alert('Uh Oh! Something is wrong with either the link or the video transcript!');
 				return -1;
 			}
     }).then((data) => {

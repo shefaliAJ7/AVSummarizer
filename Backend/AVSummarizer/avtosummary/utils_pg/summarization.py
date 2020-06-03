@@ -36,7 +36,7 @@ class Summarization:
             print("Summary", summary[0]['summary_text'])
             return summary[0]['summary_text']
         except:
-            return "Some Internal Error Happened"
+            return "-1"
 
     def improve(self, summary):
         indi_parts = summary.split('.')
