@@ -48,10 +48,12 @@ class AVSummary_Utils:
     def audio_to_text(self, audio_file_path, audio_filename):
         self.toText.filename = audio_filename
         s3link = self.toText.save_audio_in_s3(audio_file_path)
-        return self.toText.transcribe_audio(s3link)
+        text = self.toText.transcribe_audio(s3link)
+        os.remove( audio_file_path )
+        return text
 
     def text_to_summary(self, text):
-        summary = self.toSummary.summarize(text, 1, 10)
+        summary = self.toSummary.summarize(text, 5, 100)
         return self.toSummary.improve(summary)
 
 """

@@ -23,10 +23,6 @@ class Transcribe:
         self.text_stats = []
 
     def save_audio_in_s3(self, complete_file_path):
-        print(os.path.exists(complete_file_path))
-        data = open( complete_file_path, 'rb' )
-        folder_name = date.today()
-
         s3 = boto3.resource(
             's3',
             aws_access_key_id=aws_access_key_id,
@@ -34,8 +30,9 @@ class Transcribe:
             config=ConfigAWS( signature_version='s3v4' )
         )
         try:
-            s3.Bucket( aws_bucket_name ).upload_file( complete_file_path, '%s/%s' % (folder_name, self.filename) )
-            s3Link = "s3://" + aws_bucket_name + "/" + str( folder_name ) + "/" + self.filename
+            s3.Bucket( aws_bucket_name ).upload_file( complete_file_path, '%s' % (self.filename) )
+            s3Link = "s3://" + aws_bucket_name + "/" + self.filename
+            print(s3Link)
             return s3Link
         except FileNotFoundError:
             print( "Error: The file was not found" )
@@ -52,8 +49,8 @@ class Transcribe:
         transcribe = boto3.client(
             'transcribe',
             region_name="us-west-2",
-            aws_access_key_id=Config.ACCESS_KEY_ID,
-            aws_secret_access_key=Config.ACCESS_SECRET_KEY
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_access_secret_key
         )
 
         JOB_NAME = self.filename
@@ -85,6 +82,18 @@ class Transcribe:
         self.converted_text = data['results']['transcripts'][0]['transcript']
 
         # delete the job
-        #transcribe.delete_transcription_job(TranscriptionJobName=JOB_NAME)
+        transcribe.delete_transcription_job(TranscriptionJobName=JOB_NAME)
 
+        # delete the file in s3
+        if len(self.converted_text) > 0:
+            s3 = boto3.resource(
+                's3',
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_access_secret_key,
+                config=ConfigAWS( signature_version='s3v4' )
+            )
+            s3.Object(aws_bucket_name, self.filename).delete()
+
+
+        print(self.converted_text)
         return self.converted_text

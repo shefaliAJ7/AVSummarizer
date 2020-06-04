@@ -36,7 +36,7 @@ import DetailsForm from '../components/Form.js';
 class MainContainer extends React.Component {
   constructor(props) {
     super(props);
-    document.title = 'Ethiopia | App';
+    document.title = 'AvSummarizer | App';
 
     this.state = {allData : null};
   };

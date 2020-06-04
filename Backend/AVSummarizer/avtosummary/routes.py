@@ -6,7 +6,7 @@ from AVSummarizer.avtosummary.utils import AVSummary_Utils
 
 avtosummary = Blueprint('avtosummary',__name__)
 
-@avtosummary.route('/api/summarize', methods=['GET'])
+@avtosummary.route('/api/summarize', methods=['POST'])
 def get_summarization_of_avlink():
     try:
         avlink = request.json['avlink']
@@ -20,7 +20,7 @@ def get_summarization_of_avlink():
 
                 if utils.isTextValid(text):
                     summary = utils.text_to_summary(text)
-
+                    print('summary', summary)
                     if utils.isSummaryValid(summary):
                         message = {
                             "text": text,
