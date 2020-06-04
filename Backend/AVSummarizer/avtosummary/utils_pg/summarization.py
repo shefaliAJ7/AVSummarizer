@@ -12,22 +12,26 @@ class Summarization:
         self.device = torch.device('cpu')
 
     def summarize(self, text, min, max):
-        preprocess_text = text.strip().replace("\n","")
-        t5_prepared_Text = "summarize: "+preprocess_text
-        tokenized_text = self.tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(self.device)
-        summary_ids = self.model.generate(tokenized_text,
-                                     num_beams=4,
-                                     no_repeat_ngram_size=2,
-                                     min_length=min,
-                                     max_length=max,
-                                     early_stopping=True)
+        try:
+            preprocess_text = text.strip().replace("\n","")
+            t5_prepared_Text = "summarize: "+preprocess_text
+            tokenized_text = self.tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(self.device)
+            summary_ids = self.model.generate(tokenized_text,
+                                         num_beams=4,
+                                         no_repeat_ngram_size=2,
+                                         min_length=min,
+                                         max_length=max,
+                                         early_stopping=True)
 
-        output = self.tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+            output = self.tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+            self.summary = output
+        except:
+            self.summary = "-1"
 
-        return output
-
-    def improve(self, summary):
-        indi_parts = summary.split('.')
+    def improve(self):
+        if self.summary == "-1":
+            return self.summary
+        indi_parts = self.summary.split('.')
         indi_parts.pop()
         summary = '. '.join(indi_parts)
         self.summary = summary + "."
