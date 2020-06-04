@@ -39,6 +39,8 @@ class Summarization:
             return "-1"
 
     def improve(self, summary):
+        if summary == "-1":
+            return self.summary
         indi_parts = summary.split('.')
         indi_parts.pop()
         summary = '. '.join(indi_parts)

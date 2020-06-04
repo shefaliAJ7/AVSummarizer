@@ -5,10 +5,6 @@ class Config(object):
     CORS_HEADERS = ['Content-Type', 'Authorization']
     UPLOAD_FOLDER = os.path.abspath(os.path.dirname(__file__)) \
                     + '\\resources\\AudioFiles\\'
-    # AWS credentials
-    ACCESS_KEY_ID = "AKIAVR2JSCFVBIFRQKZY"
-    ACCESS_SECRET_KEY = "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"
-    BUCKET_NAME = "avsummarizer"
 
 class DevelopmentConfig(Config):
     DEBUG = True

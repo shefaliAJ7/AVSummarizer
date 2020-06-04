@@ -4,10 +4,7 @@ from urllib.parse import urljoin,urlparse,parse_qs
 class Transcript:
 
     def __init__(self):
-        self.filename = ""
-        self.s3link = ""
-        self.converted_text = "-1"
-        self.text_stats = []
+        self.text = "-1"
 
     def getTranscript(self, link):
         try:
@@ -20,9 +17,9 @@ class Transcript:
             text = ""
             for t in ts:
                 text += t['text']
-
-            return text
+            self.text = text
         except:
-            return "-1"
+            self.text = "-1"
+        return self.text
 
 
