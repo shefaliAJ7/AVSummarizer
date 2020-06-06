@@ -3,27 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Layout, Col, Card,  Menu, Breadcrumb, Carousel, Button } from 'antd';
-import { css } from '@emotion/core';
-import * as actions from '../actions';
-import {Line, HorizontalBar, Bar} from 'react-chartjs-2';
-import { ClipLoader, PulseLoader } from 'react-spinners';
-import { FacebookProvider, EmbeddedPost, EmbeddedVideo, Profile, Page, Feed } from 'react-facebook';
 
-import ItemsCarousel from 'react-items-carousel';
+import * as actions from '../actions';
+
 import range from 'lodash/range';
 import comp from '../assets/img/computer.jpg';
 
-import Slider from "react-slick";
-import randomColor from 'randomcolor';
-import TagCloud from 'react-tag-cloud';
 import $ from 'jquery';
-import {ToastContainer, toast} from 'react-toastify'
 
-
-import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SimpleTable from '../components/table'
-
 
 import DetailsForm from '../components/Form.js';
 
