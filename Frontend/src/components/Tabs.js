@@ -3,9 +3,6 @@ import { Tab, Form, Comment, Table} from 'semantic-ui-react'
 
 import { Row, Layout, Col, Card,  Menu, Breadcrumb, Carousel } from 'antd';
 
-import userImg from "../assets/img/user.png"
-import _ from 'lodash'
-
 
 class Tabs extends React.Component {
 

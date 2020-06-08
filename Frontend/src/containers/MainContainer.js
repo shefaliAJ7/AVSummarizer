@@ -3,15 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Layout, Col, Card,  Menu, Breadcrumb, Carousel, Button } from 'antd';
-
 import * as actions from '../actions';
-
-import range from 'lodash/range';
-import comp from '../assets/img/computer.jpg';
-
-import $ from 'jquery';
-
-import 'react-toastify/dist/ReactToastify.css';
 
 import DetailsForm from '../components/Form.js';
 

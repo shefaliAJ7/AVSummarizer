@@ -4,12 +4,7 @@ import Tabs from '../components/Tabs.js';
 import back from './../assets/img/back.png';
 
 import { Row, Layout, Col, Card,  Menu, Breadcrumb, Carousel} from 'antd';
-import _concat from "lodash/concat"
-import _uniq from "lodash/uniq"
-import _merge from "lodash/merge"
-import _isEmpty from "lodash/isEmpty"
-import { Left } from 'react-bootstrap/lib/Media';
-import axios from 'axios';
+
 
 
 const url_final = "http://127.0.0.1:5000/api/summarize";
