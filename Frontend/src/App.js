@@ -7,7 +7,7 @@ import { Row, Layout, Col} from 'antd';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const url_final = "http://127.0.0.1:5000/api/summarize";
+const url_final = "/api/summarize";
 
 const loadingIcon = <Loader />;
 
