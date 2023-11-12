@@ -8,7 +8,7 @@
     "@nivo/chord": "^0.51.2",
     "@nivo/line": "^0.51.0",
     "antd": "^3.10.8",
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "chart.js": "^2.7.3",
     "emotion": "^10.0.6",
     "firebase": "^7.14.6",
